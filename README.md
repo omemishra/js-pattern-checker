@@ -5,15 +5,15 @@ The tool scans domain URLs for JS files and detects sensitive patterns. Uses Way
 ## Usage
 
 - Ensure you have Python 3 installed on your system.
-- Save the code to a Python file (e.g., `js_sensitive.py`).
+- Save the code to a Python file (e.g., `jjs-pattern-checker.py`).
 - Open a terminal or command prompt and navigate to the directory where the Python file is located.
-- Run the code using the command `python js_sensitive.py <domain_urls>`, where `<domain_urls>` is a space-separated list of domain URLs to scan.
+- Run the code using the command `python3 js-pattern-checker.py <domain_urls>`, where `<domain_urls>` is a space-separated list of domain URLs to scan.
 
 ## Installation Instructions
 
 - Ensure you have the required Python modules installed. You can install them using the following command:
 
-
+`pip install colorama requests`
 
 - The code utilizes the `waybackurls` command-line tool. Ensure it is installed and accessible in your environment.
 - Installation instructions for `waybackurls` can be found at: [https://github.com/tomnomnom/waybackurls](https://github.com/tomnomnom/waybackurls)
