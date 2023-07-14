@@ -11,7 +11,6 @@ def enumerate_js_files(domain_url):
         output = subprocess.check_output(command, shell=True, text=True, stderr=subprocess.DEVNULL)
         js_files = output.splitlines()
         js_files = [js_file.strip() for js_file in js_files if js_file.strip()]
-        print(js_files)
         return js_files
     except subprocess.CalledProcessError as e:
         if e.returncode == 1:
