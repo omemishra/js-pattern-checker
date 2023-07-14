@@ -3,6 +3,7 @@ import subprocess
 import re
 import requests
 from colorama import Fore
+from urllib.parse import urlparse, unquote
 
 def enumerate_js_files(domain_url):
     command = f"waybackurls {domain_url} | grep '.js'"
@@ -26,7 +27,7 @@ def check_sensitive_credentials(js_url):
         content = response.text
 
         # Add your own sensitive keywords/patterns here
-        sensitive_patterns = ['password=', 'secret_key=', 'api_key=', 'access_token=', 'wordpress=', 'internals=' , 'admin":', 'password":', 'secret_key":', 'api_key":', 'access_token":', 'wordpress":', 'internals":' , 'admin":']
+        sensitive_patterns = ['password', 'secret_key', 'api_key', 'access_token', 'wordpress', 'to-indexed-object', 'internals']
         found_patterns = []
 
         for pattern in sensitive_patterns:
@@ -34,17 +35,17 @@ def check_sensitive_credentials(js_url):
                 found_patterns.append(pattern)
 
         if found_patterns:
-            print(Fore.GREEN + "Sensitive / Hardcoded Patterns found: " + ', '.join(found_patterns))
+            print(Fore.GREEN + "Sensitive / Hardcoded Patterns found:", ', '.join(found_patterns))
             return True
 
     return False
 
 # Check if the domain URLs are provided as command-line arguments
-# if len(sys.argv) < 2:
-#     print("Please provide at least one domain URL as an argument.")
-#     sys.exit(1)
+if len(sys.argv) < 2:
+    print("Please provide at least one domain URL as an argument.")
+    sys.exit(1)
 
-domain_urls = ["omemishra.me"]
+domain_urls = sys.argv[1:]
 
 
 for domain_url in domain_urls:
@@ -56,7 +57,7 @@ for domain_url in domain_urls:
 
     for js_file in js_files:
         if check_sensitive_credentials(js_file):
-            print(Fore.RED + "Sensitive hardcoded credentials found in file: " + js_file)
+            print(Fore.RED+ "Sensitive hardcoded credentials found in file:", js_file)
         else:
             continue
     print()  # Print a new line between different domains
